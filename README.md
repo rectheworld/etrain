@@ -1,51 +1,53 @@
-# RSVP Form - Full Stack
 
-Build a simple full-stack RSVP form to allow users to respond to their invitation to *_The Party*.
+# E-Train Intro
+The E-Train (AKA Endorsement Train but Ren can't spell endorsement constantly enough to call it that) is a online app to make it easy for Hack Reactor Students to build an online relationships with their peers.
 
-( *_The Party* is private.)
+A Peer group in the app are people who are
+	- In the Same Cohort as the person
+	- In the Senior or Junior Cohort to that person
+	- Are in a Cohort that graduated at the same time as a person.
 
-## Requirements:
+If a Hack Reactor Grad can successfully network and endorse all the persons in theres groups, that would mean 90 Connections and Endorsements to help kick start their engineering careers.
 
-Complete ALL Bare Minimums before moving forward to the Advanced Content.
+## Quick Start Development
+1. Clone the Repo
+2.  Run ```npm install```
+3.  Create a .env file
+```
+DB_HOST=<ASK DB OWNER>
+DB_USER=<ASK DB OWNER>
+DB_PASSWORD=<ASK DB OWNER>
+DB_DATABASE=<ASK DB OWNER>
+```
 
-#### Bare Minimum Requirements
+4. Start Webpack with ```npm run react-dev```
+5. Start Local Server with ```npm run start:dev```
 
-##### Client:
+## Workflow for Change Requests and Bug Squashes
+1. Create an Issue. Please detail the task you are completing.
+2.  Create a branch called 'feature/<Your issues Number>
+Example, if your github issue is #133 your branch would be feature/133
+3. When you submit commits, include a #yourIssueID
+Example:  "#133 Changed the Color of the Title Page"
+4. Create a Pull request to the TEST-MASTER branch. Request from a someone who is not you.
 
-- Create a form with React that:
-  - Takes in the following input:
-    - First Name
-    - Last Name
-    - Email Address 
-    - Number of Guests
-  - Requires all input fields to have a value before a submission can be made.
-  - Performs input validation on the email address.
-    (Email must be of form `local@domain`.)
-  - Upon submission, sends the RSVP data to your Express server.
 
-##### Server:
-- Create an endpoint called `/rsvps` in your Express server with a request handler that:
-  - Invokes a database controller function that updates or creates a new document in your MongoDB collection, `rsvps`.
+## Front End Pages
+- App
+	Entry point the app.
+	TODO: THERE IS NO REAL ROUTING RIGHT NOW
+		Routing is currently handled by creating a map of pages called "pageMap" where the key is a string representing the desired page.  The map returns the JSX React object which is passes to the return command.
+- Check Presence
+	Will use a linkedin link to determine if a user is already part of the endorsement train. If not, will take the user to the Add User Page. If a user is in the train, will go to Welcome Page
 
-##### Database:
-- Implement a database controller function that will update an existing rsvp record if a matching one exists or create one if it does not, in the file `/database/controllers/rsvp.js`.
+- Add User
+	Used to add a user to the Endorsement Train.
 
-#### Advanced Content
-- Add a RSVP list view that shows the names of the people attending
-- Refactor your request handler so that it: 
-  - Responds to the client with the modified document, rather than the original 
-  - Responds with appropriate status codes for **all situations**.  These include:
-      - Internal Server Error - Something went wrong.
-      - No record was found, so one was created.
-      - A record was found, so it was updated. 
-- Once the form is submitted and a response is returned, render an approriate confirmation view. Two are provided for you at the following paths:
-  - `/client/src/components/InsertConfirmation.jsx`
-  - `/client/src/components/UpdateConfirmation.jsx`
+- Welcome
+	The landing page for users already in the endorsement Train
 
-## Available Resources:
 
-- [MDN](https://developer.mozilla.org/bm/docs/Web/JavaScript)
-- [NPM](https://www.npmjs.com/)
-- [React Documentation](https://reactjs.org/docs/hello-world.html)
-- [Express Documentation](https://expressjs.com/en/api.html)
-- [Mongoose Documentation](http://mongoosejs.com/docs/api.html)
+## API Routes
+
+
+
