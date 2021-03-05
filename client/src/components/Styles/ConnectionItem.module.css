@@ -1,0 +1,27 @@
+.conn-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.conn-link-clicked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: gray;
+}
+
+/* .conn-link {
+
+} */
+
+.status-btn-box {
+  display: flex;
+  align-items: center;
+}
+
+.status-btn {
+  width: fit-content;
+  padding: 1em;
+  margin: 1em;
+}

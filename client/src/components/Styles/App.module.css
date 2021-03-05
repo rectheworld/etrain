@@ -1,0 +1,48 @@
+
+
+/* form {
+  margin: 12% auto;
+  background-color: #f7f7f9;
+  border: 3px solid #f1f1f1;
+  width: 380px;
+  height: 390px;
+} */
+
+.wrapper {
+  margin: 12% auto;
+  background-color: #f7f7f9;
+  border: 3px solid #f1f1f1;
+  width: 380px;
+  height: auto;
+  padding: 16px;
+}
+
+
+input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.container {
+  padding: 16px;
+}
+
+
