@@ -3,3 +3,4 @@ client/dist/bundle.js
 .DS_Store
 .env
 package-lock.json
+database/seeders
