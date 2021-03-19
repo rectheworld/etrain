@@ -47,7 +47,7 @@ app.get('/cohort', (req, res) => {
 app.post('/person/create', (req, res) => {
   let userData = req.body;
 
-  Cohort.getCohortId({name: userData.cohort}, (err, id) => {
+  Cohort.getCohortId({name: userData.cohort_name}, (err, id) => {
 
     userData['cohort_id'] = id;
 
@@ -55,7 +55,10 @@ app.post('/person/create', (req, res) => {
       if (err) {
         res.send (`An Error Occured ${err}`)
       } else {
-        res.send(data)
+        res.send({
+          "insert_response": data,
+          "user_data": userData
+        })
       }
     });
   })

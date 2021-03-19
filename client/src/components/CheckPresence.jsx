@@ -44,10 +44,9 @@ class CheckPresence extends React.Component {
       if (err) {
         console.log(err);
       } else {
-        if (data.length === 0) {
-          data = {empty: true}
-        }
+
         this.props.setPersonData(data);
+
       }
     })
 
