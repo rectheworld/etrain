@@ -45,9 +45,11 @@ app.get('/cohort', (req, res) => {
 app.post('/person/create', (req, res) => {
   let userData = req.body;
 
-  Cohort.getCohortId({name: userData.cohort_name}, (err, id) => {
+  Cohort.getCohortId({name: userData.cohort_name}, (err, data) => {
 
-    userData['cohort_id'] = id;
+    userData['cohort_id'] = data.cohort_id;
+    userData['junior_id'] = data.junior_id;
+    userData['senior_id'] = data.senior_id;
 
     Person.createPerson(userData, (err, data) => {
       if (err) {
