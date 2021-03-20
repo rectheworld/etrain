@@ -11,7 +11,8 @@ class Welcome extends React.Component {
     super(props);
 
     this.state = {
-      connectionItems: {}
+      connectionItems: {},
+      preformaceMetrics: {}
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
@@ -44,6 +45,7 @@ class Welcome extends React.Component {
     this.setState({
       connectionItems: connectionItems
     })
+
   }
 
    /**
@@ -83,12 +85,23 @@ class Welcome extends React.Component {
   /// on Mount, return the people in the users cohort who are not endorsed
   componentDidMount () {
 
+    api.getPreformaceMetrics(this.props.person_id, this.props.cohort_id, this.props.junior_id, (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        // Process connection data into a format for the state variable
+        this.setState({
+          preformaceMetrics: data
+        })
+      }
+    });
+
     api.getNonConnections(this.props.person_id, this.props.cohort_id,(err, data) => {
       if (err) {
         console.log(err)
       } else {
         // Process connection data into a format for the state variable
-        this.processConnections(data)
+        this.processConnections(data);
       }
     })
 
@@ -114,7 +127,7 @@ class Welcome extends React.Component {
       }
     })
 
-  }
+  } // End getNonConnectionbyCohort
 
   render() {
     // let connectionLinks = this.state.connectionItems.map((person) =>

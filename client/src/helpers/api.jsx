@@ -95,11 +95,32 @@ const createUser = (linkedin, first_name, last_name, cohort_name, cb) => {
 } // End getNonConnections
 
 
+/// Get preformace Metrics
+const getPreformaceMetrics = (person_id, cohort_id, junior_id,cb) => {
+  // Set up request config
+
+  var config = {
+    method: 'get',
+    url: `/connections/metrics?id=${person_id}&cohort_id=${cohort_id}&junior_id=${junior_id}`,
+    headers: { }
+  };
+
+  axios(config)
+  .then(function (response) {
+    cb(null, response.data)
+  })
+  .catch(function (error) {
+    cb(error);
+  });
+
+} // End getNonConnections
+
 
 
 module.exports = {
   getUserByLinkedIn: getUserByLinkedIn,
   getNonConnections: getNonConnections,
   updateConnection: updateConnection,
-  createUser: createUser
+  createUser: createUser,
+  getPreformaceMetrics:getPreformaceMetrics
 }

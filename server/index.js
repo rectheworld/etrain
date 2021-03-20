@@ -131,6 +131,19 @@ app.get('/connections/id', (req, res) => {
 });
 
 
+// Get the preformance metrics of a user
+app.get('/connections/metrics', (req, res) => {
+
+  Connection.getConnectionMetrics(req.query.id, req.query.cohort_id, req.query.junior_id,(err, data) => {
+    if (err) {
+      res.send (`An Error Occured ${err}`)
+    } else {
+      res.send(data)
+    }
+  });
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
