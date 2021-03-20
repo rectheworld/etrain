@@ -3,7 +3,7 @@ const db = require('../index.js');
 
 const createPerson = (data, cb) => {
 
-  let person_query = `INSERT INTO people(first_name,last_name,linkedin,corhort_id) VALUES ('${data.first_name}','${data.last_name}','${data.linkedin}',${data.cohort_id});`
+  let person_query = `INSERT INTO people(first_name,last_name,linkedin,cohort_id) VALUES ('${data.first_name}','${data.last_name}','${data.linkedin}',${data.cohort_id});`
 
   db.query(person_query,(err, results, fields) => {
     if (err) {
