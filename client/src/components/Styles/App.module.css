@@ -1,36 +1,16 @@
-
-
-/* form {
-  margin: 12% auto;
-  background-color: #f7f7f9;
-  border: 3px solid #f1f1f1;
-  width: 380px;
-  height: 390px;
-} */
-
 .wrapper {
-  margin: 12% auto;
-  background-color: #f7f7f9;
-  border: 3px solid #f1f1f1;
-  width: 380px;
+  margin: 5% auto;
+  background-color: #ffffff;
+  padding: 3px;
+  width: 570px;
   height: auto;
-  padding: 16px;
 }
 
 
-input, select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-button {
+/* button {
   background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
+  padding: 7px 300px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
@@ -39,10 +19,8 @@ button {
 
 button:hover {
   opacity: 0.8;
-}
+} */
 
 .container {
   padding: 16px;
 }
-
-

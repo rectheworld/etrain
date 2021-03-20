@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import ConnectionItem from './ConnectionItem.jsx'
+import PercentageBar from './PercentageBar.jsx'
 
 import api from '../helpers/api.jsx'
 
@@ -167,15 +168,19 @@ class Welcome extends React.Component {
 
     return (
       <div>
-        <h3>Welcome {this.props.first_name}! </h3>
-
-        <p>
-          You have endorsed __ of people from your cohort!
-          You have also endorsed _ of your juniors and ___ of your peers!
-        </p>
-
-        <h3> Lets keep the Karma Rolling!</h3>
+        <section>
+        <h2>Welcome {this.props.first_name}! </h2>
+          You have endorsed <strong>20</strong> people in your cohort!
+          <PercentageBar percentage="20"/>
+          You have endorsed <strong>50</strong> of your seniors!
+          <PercentageBar percentage="50"/>
+          You have endorsed <strong>100</strong> of your juniors!
+          <PercentageBar percentage="100"/>
+        </section>
+        <section>
+        <strong> Lets keep the Karma Rolling!</strong>
         {connectionLinks}
+        </section>
       </div>
     );
   }

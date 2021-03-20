@@ -93,7 +93,10 @@ class App extends React.Component {
 
     return (
       <div className={Styles['wrapper']}>
-        {currentPage}
+        <div className="logo">
+          <h1>The Endorsement Train</h1>
+        </div>
+        <main>{currentPage}</main>
       </div>
     );
   }

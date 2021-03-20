@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 30px 30px;
+}
+
+.conn-item:nth-child(odd){
+  background-color: #E3E3E3;
 }
 
 .conn-link-clicked {
@@ -20,8 +25,26 @@
   align-items: center;
 }
 
+
 .status-btn {
-  width: fit-content;
-  padding: 1em;
-  margin: 1em;
+  background-color: #0078AB;
+  color: white;
+  padding: 10px 25px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.status-btn:hover {
+  opacity: 0.8;
+}
+
+.status-btn:nth-child(odd){
+  margin-right: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: #0078AB;
 }

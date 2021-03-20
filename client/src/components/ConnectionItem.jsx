@@ -24,8 +24,8 @@ function ConnectionItem(props) {
     }
 
     <div className={Styles['status-btn-box']}>
-      <button className={Styles['status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'friended')}}> Friended!</button>
-      <button className={Styles['status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'endorsed')}}> Endorsed!</button>
+      <button className={Styles['status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'friended')}}> Friended</button>
+      <button className={Styles['status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'endorsed')}}> Endorsed</button>
     </div>
 
   </div>

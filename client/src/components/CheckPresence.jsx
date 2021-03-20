@@ -10,7 +10,7 @@ class CheckPresence extends React.Component {
     super(props);
 
     this.state = {
-      linkedInLink: '',
+      linkedInLink: 'https://www.linkedin.com/in/lexyk/',
       bad_formatting: false
     };
 
@@ -55,23 +55,19 @@ class CheckPresence extends React.Component {
   render() {
 
     return (
-      // <div>
-      //   <div>
-      //     <h3>Welcome to the Endorsement Train</h3>
-      //     Lets me check your ticket:
-      //   </div>
-
+      <div>
+        <h2>Check in</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
             Please Paste Linkedin Link:
-            <input type="text" value={this.state.linkedInLink} onChange={this.handleChange} />
+            <input type="text" value={this.state.linkedInLink} onChange={this.handleChange} placeholder="https://www.linkedin.com/in/yourname"/>
           </label>
           {this.state.bad_formatting &&
-            <h2> That linkedIn link did not work, try pasting the link from a browser</h2>
+            <span className="warning">Not a valid Linkedin link, try copying the link directly from the browser</span>
           }
           <input type="submit" value="Submit" />
         </form>
-      // </div>
+      </div>
     );
   }
 }
