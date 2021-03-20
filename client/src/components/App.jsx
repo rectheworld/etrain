@@ -82,6 +82,8 @@ class App extends React.Component {
       person_id = {this.state.person_id}
       first_name = {this.state.first_name}
       cohort_id = {this.state.cohort_id}
+      junior_id = {this.state.junior_id}
+      senior_id = {this.state.senior_id}
       />,
       'CheckPresence' : <CheckPresence setPersonData = {this.setPersonData}/>
 
