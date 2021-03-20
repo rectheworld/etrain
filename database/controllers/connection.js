@@ -91,8 +91,46 @@ const getUnConnectedList = (id, cohort_id, cb) => {
 
 
 
+const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
+  console.log('In getConnectionMetrics')
+
+  let query = `SELECT
+  ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
+  FROM people as p
+  LEFT JOIN etrain.connections as c ON p.id = c.person_id
+  WHERE p.id = ${person_id} AND p.cohort_id = ${cohort_id}
+  GROUP BY p.id) as num_endorsed_self,
+
+(SELECT COUNT(p.id)
+  FROM people as p
+  WHERE p.cohort_id = ${cohort_id}) as num_cohort_self,
+
+  ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
+  FROM people as p
+  LEFT JOIN etrain.connections as c ON p.id = c.person_id
+  WHERE p.id = ${person_id} AND p.cohort_id = ${junior_id}
+  GROUP BY p.id) as num_endorsed_junior,
+
+(SELECT COUNT(p.id)
+  FROM people as p
+  WHERE p.cohort_id = ${junior_id}) as num_cohort_senior;`
+
+
+
+  db.query(query,(err, results) => {
+    if (err) {
+      cb(err)
+    }
+    cb(null, results);
+  });
+
+};
+
+
+
 module.exports = {
   createConnection: createConnection,
   getUnConnectedList: getUnConnectedList,
-  getConnectedId: getConnectedId
+  getConnectedId: getConnectedId,
+  getConnectionMetrics: getConnectionMetrics
 }
