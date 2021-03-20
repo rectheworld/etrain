@@ -12,7 +12,9 @@
   "license": "UNLICENSED",
   "dependencies": {
     "axios": "^0.18.1",
+    "dotenv": "^8.2.0",
     "jquery": "^3.3.1",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
@@ -23,8 +25,10 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
+    "css-loader": "^5.1.2",
     "express": "^4.16.3",
     "mongoose": "^5.1.2",
+    "style-loader": "^2.0.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   }
