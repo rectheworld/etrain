@@ -33,9 +33,7 @@ app.get('/cohort', (req, res) => {
     if (err) {
       res.send (`An Error Occured ${err}`)
     } else {
-      res.send({
-        "id": data
-      })
+      res.send(data)
     }
 
   });
