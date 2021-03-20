@@ -47,8 +47,6 @@ class App extends React.Component {
 
   setPersonData (data) {
 
-    data = data[0];
-
     if (data.hasOwnProperty('empty')) {
       this.setState({
         inSystem: 'notfound',
@@ -74,7 +72,7 @@ class App extends React.Component {
 
     let pageMap = {
       // 'welcome': <WelcomePage swtichPagaes={this.swtichPagaes} setSessionInfo={this.setSessionInfo} initSocket={this.initSocket} />,
-      'AddUser' : <AddUser first_name={this.state.first_name}/>,
+      'AddUser' : <AddUser first_name={this.state.first_name} setPersonData = {this.setPersonData}/>,
       'Welcome' : <Welcome
       person_id = {this.state.person_id}
       first_name = {this.state.first_name}
