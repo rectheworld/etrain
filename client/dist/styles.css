@@ -5,7 +5,12 @@
 }
 
 body {
-  background: radial-gradient(#1684B2, rgb(1, 99, 141));
+  overscroll-behavior-y: none;
+}
+
+body {
+  /* background: radial-gradient(#1684B2, rgb(1, 99, 141)); */
+  background-color: #1684B2;
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
@@ -15,7 +20,6 @@ body {
 
 main {
   padding: 0 2.5em;
-  padding-bottom: 3em;
 }
 
 
@@ -45,12 +49,13 @@ h1 {
 
 h2 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+h3 {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .warning {
@@ -68,12 +73,24 @@ section {
   margin: 2em 0;
 }
 
+section:nth-child(n+2) {
+  margin-top: 3.5em;
+}
+
 strong {
   font-weight: 600;
   color: #0078AB;
 }
 
 .bar {
-  padding-top: 0.2rem;
-  padding-bottom: 0.7rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.8rem;
+}
+
+form {
+  margin-bottom: 3em;
+}
+
+.bottom-buffer {
+  margin-bottom: 1rem;
 }

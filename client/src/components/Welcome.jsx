@@ -178,7 +178,7 @@ class Welcome extends React.Component {
           <PercentageBar percentage="100"/>
         </section>
         <section>
-        <strong> Lets keep the Karma Rolling!</strong>
+        <h3> Lets keep the Karma Rolling!</h3>
         {connectionLinks}
         </section>
       </div>
