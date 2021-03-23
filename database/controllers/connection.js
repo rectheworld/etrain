@@ -116,7 +116,7 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
 
 (SELECT COUNT(p.id)
   FROM people as p
-  WHERE p.cohort_id = ${junior_id}) as num_cohort_senior;`
+  WHERE p.cohort_id = ${junior_id}) as num_cohort_junior;`
 
 
 

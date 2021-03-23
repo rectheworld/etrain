@@ -14,21 +14,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../client/dist'));
 
 
-// app.use((req, res, next) => {
-//   const err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-/// Cohort
-// app.post('/cohort/create', (req, res) => {
-//   console.log('In POST Cohort Create')
-
-// });
-
-/// Get a User by submitinga LinkedIn link
+/// Get a cohort
 app.get('/cohort', (req, res) => {
   Cohort.getCohortId(req.query, (err, data) => {
+
+    if (err) {
+      res.send (`An Error Occured ${err}`)
+    } else {
+      res.send(data)
+    }
+
+  });
+});
+
+/// Create a cohort and peer cohorts
+app.post('/cohort', (req, res) => {
+  console.log(req.query.name, req.query.junior_name)
+
+  Cohort.createCohort(req.query.name, req.query.junior_name, req.query.start_date, (err, data) => {
 
     if (err) {
       res.send (`An Error Occured ${err}`)
@@ -47,6 +50,16 @@ app.post('/person/create', (req, res) => {
 
   Cohort.getCohortId({name: userData.cohort_name}, (err, data) => {
 
+    /// Test if a cohort was returned
+
+    // If not, return a new cohort alert
+    if (Object.keys(data).length <= 0 ) {
+      res.send( {
+        'alert' : "New Cohort"
+      });
+
+    } else {
+    /// if ti was returned, prepare create person and the response
     userData['cohort_id'] = data.cohort_id;
     userData['junior_id'] = data.junior_id;
     userData['senior_id'] = data.senior_id;
@@ -61,6 +74,8 @@ app.post('/person/create', (req, res) => {
         })
       }
     });
+
+    } // End of If stament on if cohort exisits
   })
 
 });
