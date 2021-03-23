@@ -64,11 +64,10 @@ class Welcome extends React.Component {
   updateConnectionStatus (target_id, status) {
     console.log(`In updateConnectionStatus with ${target_id} and ${status}`);
 
-    api.updateConnection( this.props.person_id, target_id, status, () => this.updateConnectionStatusCallBack(status));
+    api.updateConnection( this.props.person_id, target_id, status, this.updateConnectionStatusCallBack);
   } // End updateConnectionStatus
 
-  // updateConnectionStatusCallBack (err, data, target_id) {
-  updateConnectionStatusCallBack (status) {
+  updateConnectionStatusCallBack (err, data, target_id, status) {
     console.log('updateConnectionStatusCallBack');
 
     if (err) {
@@ -94,7 +93,7 @@ class Welcome extends React.Component {
         // Process connection data into a format for the state variable
         this.setState({
           preformaceMetrics: data[0]
-        }, ()=> console.log(this.state.preformaceMetrics))
+        })
       }
     });
 
@@ -147,7 +146,6 @@ class Welcome extends React.Component {
   } // End getNonConnectionbyCohort
 
   render() {
-    console.log(this.state.connectionItems)
     // let connectionLinks = this.state.connectionItems.map((person) =>
     return (
       <div>
@@ -156,8 +154,10 @@ class Welcome extends React.Component {
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
         <section>
-          <h4>your cohort</h4>
-          <h4>your juniors</h4>
+        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>your cohort</h4>
+        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>your juniors</h4>
+        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'senior')}>your seniors</h4>
+        <h4 onClick={()=>this.getEndorsedPersons(this.props.person_id)}>endorsed</h4>
         </section>
         <ConnectionLinks
         connectionItems={this.state.connectionItems}

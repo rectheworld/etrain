@@ -1,6 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
-import axios from 'axios';
 
 import AddUser from './AddUser.jsx';
 import CheckPresence from './CheckPresence.jsx';
