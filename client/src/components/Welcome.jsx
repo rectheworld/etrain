@@ -13,7 +13,8 @@ class Welcome extends React.Component {
 
     this.state = {
       connectionItems: {},
-      preformaceMetrics: {num_cohort_self: 0}
+      preformaceMetrics: {num_cohort_self: 0},
+      displayedCohort: 'self'
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
@@ -73,12 +74,14 @@ class Welcome extends React.Component {
     if (err) {
       console.log(err)
     } else {
-      // Upon Success, update the front end status of the link so it appears grayed out
-      let newConnections = this.state.connectionItems;
-      newConnections[target_id].status = status;
-      this.setState({
-        connectionItems: newConnections
-      })
+      // // Upon Success, update the front end status of the link so it appears grayed out
+      // let newConnections = this.state.connectionItems;
+      // newConnections[target_id].status = status;
+      // this.setState({
+      //   connectionItems: newConnections
+      // })
+
+      this.getNonConnectionbyCohort(this.props.person_id, this.state.displayedCohort)
     }
   } // End updateConnectionStatusCallBack
 
@@ -127,7 +130,9 @@ class Welcome extends React.Component {
         // Process connection data into a format for the state variable
         this.processConnections(data)
       }
-    })
+    }, 
+    this.setState({ displayedCohort: cohortRelation})
+      )
 
   } // End getNonConnectionbyCohort
 
