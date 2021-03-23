@@ -79,11 +79,12 @@ class App extends React.Component {
       // 'welcome': <WelcomePage swtichPagaes={this.swtichPagaes} setSessionInfo={this.setSessionInfo} initSocket={this.initSocket} />,
       'AddUser' : <AddUser first_name={this.state.first_name} setPersonData = {this.setPersonData}/>,
       'Welcome' : <Welcome
-      person_id = {this.state.person_id}
+      person_id = {Number(this.state.person_id)}
       first_name = {this.state.first_name}
-      cohort_id = {this.state.cohort_id}
-      junior_id = {this.state.junior_id}
-      senior_id = {this.state.senior_id}
+      last_name = {this.state.last_name}
+      cohort_id = {Number(this.state.cohort_id)}
+      junior_id = {Number(this.state.junior_id)}
+      senior_id = {Number(this.state.senior_id)}
       />,
       'CheckPresence' : <CheckPresence setPersonData = {this.setPersonData}/>
 

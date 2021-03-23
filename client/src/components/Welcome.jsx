@@ -22,7 +22,6 @@ class Welcome extends React.Component {
 
   }
 
-
   /**
   processConnections
   Takes the data returned from API and formats into an object where the key is the target_id and the value is the
@@ -38,9 +37,12 @@ class Welcome extends React.Component {
   processConnections (data) {
 
     let connectionItems = {};
+    console.log(data)
     data.forEach((x) => {
-      x['status'] = 'none'
+      if(!x['status']) {
+        x['status'] = 'none'
       connectionItems[x.id] = x;
+      }
     });
 
     this.setState({
@@ -62,12 +64,11 @@ class Welcome extends React.Component {
   updateConnectionStatus (target_id, status) {
     console.log(`In updateConnectionStatus with ${target_id} and ${status}`);
 
-
-
-    api.updateConnection( this.props.person_id, target_id, status, this.updateConnectionStatusCallBack);
+    api.updateConnection( this.props.person_id, target_id, status, () => this.updateConnectionStatusCallBack(status));
   } // End updateConnectionStatus
 
-  updateConnectionStatusCallBack (err, data, target_id) {
+  // updateConnectionStatusCallBack (err, data, target_id) {
+  updateConnectionStatusCallBack (status) {
     console.log('updateConnectionStatusCallBack');
 
     if (err) {
@@ -75,7 +76,7 @@ class Welcome extends React.Component {
     } else {
       // Upon Success, update the front end status of the link so it appears grayed out
       let newConnections = this.state.connectionItems;
-      newConnections[target_id].status = 'clicked';
+      newConnections[target_id].status = status;
       this.setState({
         connectionItems: newConnections
       })
