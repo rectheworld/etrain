@@ -1,8 +1,10 @@
 import React from 'react';
 import Styles from "./Styles/PercentageBar.module.css";
 
-const PercentageBar = ({ total, endorsed }) => {
-  let percentage = `${Math.round((endorsed / total) * 100)}%`;
+const PercentageBar = ({ total, endorsed}) => {
+  let percentage = Math.round((endorsed / total) * 100);
+  percentage = isNaN(percentage)? 0 : `${percentage}%`
+  
   let tooltipText = `${endorsed} / ${total}`
 
   return (
