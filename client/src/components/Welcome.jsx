@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import ConnectionItem from './ConnectionItem.jsx'
+import Stats from './Stats.jsx'
+
 
 import api from '../helpers/api.jsx'
 
@@ -12,7 +14,7 @@ class Welcome extends React.Component {
 
     this.state = {
       connectionItems: {},
-      preformaceMetrics: {}
+      preformaceMetrics: {num_cohort_self: 0}
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
@@ -91,8 +93,8 @@ class Welcome extends React.Component {
       } else {
         // Process connection data into a format for the state variable
         this.setState({
-          preformaceMetrics: data
-        })
+          preformaceMetrics: data[0]
+        }, ()=> console.log(this.state.preformaceMetrics))
       }
     });
 
@@ -116,6 +118,7 @@ class Welcome extends React.Component {
     }
 
     let cohortRelationId = relationMap[cohortRelation];
+    console.log(cohortRelationId)
 
 
     api.getNonConnections(personid, cohortRelationId,(err, data) => {
@@ -144,7 +147,7 @@ class Welcome extends React.Component {
   } // End getNonConnectionbyCohort
 
   render() {
-
+    console.log(this.state.connectionItems)
     // let connectionLinks = this.state.connectionItems.map((person) =>
     let connectionLinks = [];
     Object.entries(this.state.connectionItems).forEach((key) =>
@@ -167,15 +170,14 @@ class Welcome extends React.Component {
 
     return (
       <div>
-        <h3>Welcome {this.props.first_name}! </h3>
-
-        <p>
-          You have endorsed __ of people from your cohort!
-          You have also endorsed _ of your juniors and ___ of your peers!
-        </p>
-
+        <section>
+        <h2>Welcome {this.props.first_name}! </h2>
+          <Stats preformaceMetrics={this.state.preformaceMetrics}/>
+        </section>
+        <section>
         <h3> Lets keep the Karma Rolling!</h3>
         {connectionLinks}
+        </section>
       </div>
     );
   }

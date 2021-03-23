@@ -98,9 +98,9 @@ class AddUser extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          <h3>Hmmmm looks like you're not a passanger on the train yet?</h3>
-          Lets get you a ticket!
+        <div className="bottom-buffer">
+          <h2>Hmmmm looks like you're not a passanger on the train yet?</h2>
+          <strong>Lets get you a ticket!</strong>
         </div>
         <form onSubmit={this.handleSubmit}>
           <label>
