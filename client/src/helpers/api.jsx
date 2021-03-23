@@ -137,6 +137,25 @@ const getEndorsedPersons = (person_id, cb) => {
 } // End getEndorsedPersons
 
 
+/// Get preformace Metrics
+const createCohort = (cohort_name, junior_name, start_date, cb) => {
+  // Set up request config
+
+  var config = {
+    method: 'post',
+    url: `/cohort/?name=${cohort_name}&junior_name=${junior_name}&start_date='${start_date}'`,
+    headers: { }
+  };
+
+  axios(config)
+  .then(function (response) {
+    cb(null, response.data)
+  })
+  .catch(function (error) {
+    cb(error);
+  });
+
+} // End getNonConnections
 
 module.exports = {
   getUserByLinkedIn: getUserByLinkedIn,
@@ -144,5 +163,6 @@ module.exports = {
   updateConnection: updateConnection,
   createUser: createUser,
   getPreformaceMetrics:getPreformaceMetrics,
-  getEndorsedPersons:getEndorsedPersons
+  getEndorsedPersons:getEndorsedPersons,
+  createCohort:createCohort
 }
