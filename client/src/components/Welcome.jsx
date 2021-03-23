@@ -129,7 +129,22 @@ class Welcome extends React.Component {
 
   } // End getNonConnectionbyCohort
 
+  getEndorsedPersons (personid) {
+
+
+    api.getEndorsedPersons(personid,(err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        // Process connection data into a format for the state variable
+        this.processConnections(data)
+      }
+    })
+
+  } // End getNonConnectionbyCohort
+
   render() {
+
     // let connectionLinks = this.state.connectionItems.map((person) =>
     let connectionLinks = [];
     Object.entries(this.state.connectionItems).forEach((key) =>

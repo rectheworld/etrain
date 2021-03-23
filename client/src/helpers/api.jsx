@@ -116,11 +116,33 @@ const getPreformaceMetrics = (person_id, cohort_id, junior_id,cb) => {
 } // End getNonConnections
 
 
+/// Get endorsed persons
+const getEndorsedPersons = (person_id, cb) => {
+  // Set up request config
+
+  var config = {
+    method: 'get',
+    url: `/connections/endorsed/?id=${person_id}`,
+    headers: { }
+  };
+
+  axios(config)
+  .then(function (response) {
+    cb(null, response.data)
+  })
+  .catch(function (error) {
+    cb(error);
+  });
+
+} // End getEndorsedPersons
+
+
 
 module.exports = {
   getUserByLinkedIn: getUserByLinkedIn,
   getNonConnections: getNonConnections,
   updateConnection: updateConnection,
   createUser: createUser,
-  getPreformaceMetrics:getPreformaceMetrics
+  getPreformaceMetrics:getPreformaceMetrics,
+  getEndorsedPersons:getEndorsedPersons
 }
