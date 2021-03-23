@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import ConnectionItem from './ConnectionItem.jsx'
-import PercentageBar from './PercentageBar.jsx'
+import Stats from './Stats.jsx'
+
 
 import api from '../helpers/api.jsx'
 
@@ -13,7 +14,7 @@ class Welcome extends React.Component {
 
     this.state = {
       connectionItems: {},
-      preformaceMetrics: {}
+      preformaceMetrics: {num_cohort_self: 0}
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
@@ -92,8 +93,8 @@ class Welcome extends React.Component {
       } else {
         // Process connection data into a format for the state variable
         this.setState({
-          preformaceMetrics: data
-        })
+          preformaceMetrics: data[0]
+        }, ()=> console.log(this.state.preformaceMetrics))
       }
     });
 
@@ -117,6 +118,7 @@ class Welcome extends React.Component {
     }
 
     let cohortRelationId = relationMap[cohortRelation];
+    console.log(cohortRelationId)
 
 
     api.getNonConnections(personid, cohortRelationId,(err, data) => {
@@ -145,7 +147,7 @@ class Welcome extends React.Component {
   } // End getNonConnectionbyCohort
 
   render() {
-
+    console.log(this.state.connectionItems)
     // let connectionLinks = this.state.connectionItems.map((person) =>
     let connectionLinks = [];
     Object.entries(this.state.connectionItems).forEach((key) =>
@@ -170,12 +172,7 @@ class Welcome extends React.Component {
       <div>
         <section>
         <h2>Welcome {this.props.first_name}! </h2>
-          You have endorsed <strong>20</strong> people in your cohort!
-          <PercentageBar percentage="20"/>
-          You have endorsed <strong>50</strong> of your seniors!
-          <PercentageBar percentage="50"/>
-          You have endorsed <strong>100</strong> of your juniors!
-          <PercentageBar percentage="100"/>
+          <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
         <section>
         <h3> Lets keep the Karma Rolling!</h3>

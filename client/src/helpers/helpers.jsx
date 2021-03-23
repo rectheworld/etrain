@@ -6,10 +6,8 @@ const cleanLinkedIn = (fullLink) => {
   // eslint-disable-next-line no-useless-escape
   if(fullLink.match('https:\/\/www\.linkedin\.com\/in\/([a-zA-Z0123456789-]+)')) {
     name = fullLink.match('https:\/\/www\.linkedin\.com\/in\/([a-zA-Z0123456789-]+)')[1];
-    console.log('first matched:', name)
   } else if (fullLink.match('www\.linkedin\.com\/in\/([a-zA-Z0123456789-]+)')){
     name = fullLink.match('www\.linkedin\.com\/in\/([a-zA-Z0123456789-]+)')[1];
-    console.log('second matched:', name)
   }
  
   return(name)
