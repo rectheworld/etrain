@@ -17,6 +17,8 @@ class App extends React.Component {
       last_name: '',
       linkedin: '',
       cohort_id: '',
+      junior_id: '',
+      senior_id: '',
       person_id: '',
       inSystem: 'unknown',
 
@@ -35,7 +37,8 @@ class App extends React.Component {
       first_name: event.target.first_name,
       last_name: event.target.last_name,
       linkedin: event.target.linkedin,
-      cohort_id: event.target.cohort_id
+      cohort_id: event.target.cohort_id,
+
     });
   }
 
@@ -59,6 +62,8 @@ class App extends React.Component {
         last_name: data.last_name,
         linkedin: data.linkedin,
         cohort_id: data.cohort_id,
+        junior_id: data.junior_id,
+        senior_id: data.senior_id,
         person_id: data.id,
         inSystem: 'logedin',
         currentPage: 'Welcome',
@@ -77,6 +82,8 @@ class App extends React.Component {
       person_id = {this.state.person_id}
       first_name = {this.state.first_name}
       cohort_id = {this.state.cohort_id}
+      junior_id = {this.state.junior_id}
+      senior_id = {this.state.senior_id}
       />,
       'CheckPresence' : <CheckPresence setPersonData = {this.setPersonData}/>
 

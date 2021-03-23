@@ -57,6 +57,9 @@ const getConnectedId = (id, target_id, cb) => {
 
 
 
+
+
+
 const getUnConnectedList = (id, cohort_id, cb) => {
     let person_query = `
     SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections FROM etrain.people AS p
@@ -91,8 +94,67 @@ const getUnConnectedList = (id, cohort_id, cb) => {
 
 
 
+const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
+  console.log('In getConnectionMetrics')
+
+  let query = `SELECT
+  ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
+  FROM people as p
+  LEFT JOIN etrain.connections as c ON p.id = c.person_id
+  WHERE p.id = ${person_id} AND p.cohort_id = ${cohort_id}
+  GROUP BY p.id) as num_endorsed_self,
+
+(SELECT COUNT(p.id)
+  FROM people as p
+  WHERE p.cohort_id = ${cohort_id}) as num_cohort_self,
+
+  ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
+  FROM people as p
+  LEFT JOIN etrain.connections as c ON p.id = c.person_id
+  WHERE p.id = ${person_id} AND p.cohort_id = ${junior_id}
+  GROUP BY p.id) as num_endorsed_junior,
+
+(SELECT COUNT(p.id)
+  FROM people as p
+  WHERE p.cohort_id = ${junior_id}) as num_cohort_senior;`
+
+
+
+  db.query(query,(err, results) => {
+    if (err) {
+      cb(err)
+    }
+    cb(null, results);
+  });
+
+};
+
+const getEndorsedConnections = (id, cb) => {
+
+  let query = `SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id FROM etrain.people AS p
+  -- Limit the results to the target person who are either not conencted at all or friended
+  WHERE (
+        p.id IN (SELECT target_id FROM etrain.people as p
+      INNER JOIN etrain.connections as c ON p.id = c.person_id
+      WHERE p.id = ${id} AND c.status_name = 'endorsed'
+          )
+      )
+      AND p.id != ${id};`
+
+  db.query(query,(err, results) => {
+    if (err) {
+      cb(err)
+    }
+    cb(null, results);
+  });
+
+}
+
+
 module.exports = {
   createConnection: createConnection,
   getUnConnectedList: getUnConnectedList,
-  getConnectedId: getConnectedId
+  getConnectedId: getConnectedId,
+  getConnectionMetrics: getConnectionMetrics,
+  getEndorsedConnections: getEndorsedConnections
 }

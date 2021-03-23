@@ -33,7 +33,11 @@ const getPerson = (data, cb) => {
 
 const getPersonByLinkedIn = (data, cb) => {
   // Get person data
-  let person_query = `SELECT * FROM people as p WHERE p.linkedin = "${data.linkedin}";`
+  let person_query = `SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, cs.id as 'senior_id',  cj.junior_id as 'junior_id'
+  FROM people as p
+  LEFT JOIN etrain.cohort as cs ON p.cohort_id = cs.junior_id
+  LEFT JOIN etrain.cohort as cj ON p.cohort_id = cj.id
+  WHERE p.linkedin = "${data.linkedin}";`
 
   db.query(person_query,(err, results, fields) => {
     if (err) {

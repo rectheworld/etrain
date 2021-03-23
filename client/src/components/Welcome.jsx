@@ -11,11 +11,13 @@ class Welcome extends React.Component {
     super(props);
 
     this.state = {
-      connectionItems: {}
+      connectionItems: {},
+      preformaceMetrics: {}
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
     this.updateConnectionStatusCallBack = this.updateConnectionStatusCallBack.bind(this);
+    this.getNonConnectionbyCohort = this.getNonConnectionbyCohort.bind(this);
 
   }
 
@@ -43,6 +45,7 @@ class Welcome extends React.Component {
     this.setState({
       connectionItems: connectionItems
     })
+
   }
 
    /**
@@ -79,9 +82,43 @@ class Welcome extends React.Component {
   } // End updateConnectionStatusCallBack
 
 
+  /// on Mount, return the people in the users cohort who are not endorsed
   componentDidMount () {
 
+    api.getPreformaceMetrics(this.props.person_id, this.props.cohort_id, this.props.junior_id, (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        // Process connection data into a format for the state variable
+        this.setState({
+          preformaceMetrics: data
+        })
+      }
+    });
+
     api.getNonConnections(this.props.person_id, this.props.cohort_id,(err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        // Process connection data into a format for the state variable
+        this.processConnections(data);
+      }
+    })
+
+  } // End componentDidMount
+
+  getNonConnectionbyCohort (personid, cohortRelation) {
+
+    let relationMap = {
+      "self": this.props.cohort_id,
+      "junior": this.props.junior_id,
+      "senior": this.props.senior_id
+    }
+
+    let cohortRelationId = relationMap[cohortRelation];
+
+
+    api.getNonConnections(personid, cohortRelationId,(err, data) => {
       if (err) {
         console.log(err)
       } else {
@@ -90,8 +127,21 @@ class Welcome extends React.Component {
       }
     })
 
-  } // End componentDidMount
+  } // End getNonConnectionbyCohort
 
+  getEndorsedPersons (personid) {
+
+
+    api.getEndorsedPersons(personid,(err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        // Process connection data into a format for the state variable
+        this.processConnections(data)
+      }
+    })
+
+  } // End getNonConnectionbyCohort
 
   render() {
 
@@ -135,6 +185,8 @@ class Welcome extends React.Component {
 Welcome.propTypes = {
   person_id: PropTypes.number.isRequired,
   cohort_id: PropTypes.number.isRequired,
+  senior_id: PropTypes.number.isRequired,
+  junior_id: PropTypes.number.isRequired,
   first_name: PropTypes.string.isRequired,
   last_name: PropTypes.string.isRequired
 }
