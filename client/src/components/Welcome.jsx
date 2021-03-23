@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
-
-import ConnectionItem from './ConnectionItem.jsx'
 import Stats from './Stats.jsx'
 
 
 import api from '../helpers/api.jsx'
+import ConnectionLinks from './ConnectionLinks.jsx';
 
 
 class Welcome extends React.Component {
@@ -149,25 +148,6 @@ class Welcome extends React.Component {
   render() {
     console.log(this.state.connectionItems)
     // let connectionLinks = this.state.connectionItems.map((person) =>
-    let connectionLinks = [];
-    Object.entries(this.state.connectionItems).forEach((key) =>
-     {
-       // Grba the person object
-      let person = key[1];
-      // Create a Connection link Reacto Component
-      connectionLinks.push(
-        <ConnectionItem
-        key = {person.linkedin}
-        first_name = {person.first_name}
-        last_name = {person.last_name}
-        linkedin = {person.linkedin}
-        target_id = {person.id}
-        status={person.status}
-        updateConnectionStatus = {this.updateConnectionStatus}/>
-        )
-      })
-
-
     return (
       <div>
         <section>
@@ -175,9 +155,13 @@ class Welcome extends React.Component {
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
         <section>
-        <h3> Lets keep the Karma Rolling!</h3>
-        {connectionLinks}
+          <h4>your cohort</h4>
+          <h4>your juniors</h4>
         </section>
+        <ConnectionLinks
+        connectionItems={this.state.connectionItems}
+        updateConnectionStatus={this.updateConnectionStatus}
+        />
       </div>
     );
   }
