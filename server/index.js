@@ -117,6 +117,18 @@ app.post('/connections', (req, res) => {
   });
 });
 
+// Gets connections that have been endorsed by the target person
+app.get('/connections/endorsed', (req, res) => {
+
+  Connection.getEndorsedConnections(req.query.id, (err, data) => {
+    if (err) {
+      res.send (`An Error Occured ${err}`)
+    } else {
+      res.send(data)
+    }
+  });
+});
+
 
 // Get the id of a exisiting connection if it exisits
 app.get('/connections/id', (req, res) => {

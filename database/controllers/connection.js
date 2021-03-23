@@ -57,6 +57,9 @@ const getConnectedId = (id, target_id, cb) => {
 
 
 
+
+
+
 const getUnConnectedList = (id, cohort_id, cb) => {
     let person_query = `
     SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections FROM etrain.people AS p
@@ -126,11 +129,32 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
 
 };
 
+const getEndorsedConnections = (id, cb) => {
+
+  let query = `SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id FROM etrain.people AS p
+  -- Limit the results to the target person who are either not conencted at all or friended
+  WHERE (
+        p.id IN (SELECT target_id FROM etrain.people as p
+      INNER JOIN etrain.connections as c ON p.id = c.person_id
+      WHERE p.id = ${id} AND c.status_name = 'endorsed'
+          )
+      )
+      AND p.id != ${id};`
+
+  db.query(query,(err, results) => {
+    if (err) {
+      cb(err)
+    }
+    cb(null, results);
+  });
+
+}
 
 
 module.exports = {
   createConnection: createConnection,
   getUnConnectedList: getUnConnectedList,
   getConnectedId: getConnectedId,
-  getConnectionMetrics: getConnectionMetrics
+  getConnectionMetrics: getConnectionMetrics,
+  getEndorsedConnections: getEndorsedConnections
 }
