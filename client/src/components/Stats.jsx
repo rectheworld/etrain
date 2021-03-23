@@ -10,7 +10,7 @@ function Stats({preformaceMetrics}) {
           You have endorsed <strong>{numEndorsedCohort}</strong> people in your cohort!
           <PercentageBar total={preformaceMetrics.num_cohort_self} endorsed={numEndorsedCohort}/>
           You have endorsed <strong>{numEndorsedJuniors}</strong> of your juniors!
-          <PercentageBar total={preformaceMetrics.num_cohort_senior} endorsed={numEndorsedJuniors}/>
+          <PercentageBar total={preformaceMetrics.num_cohort_junior} endorsed={numEndorsedJuniors}/>
         </div>
     )
 }
