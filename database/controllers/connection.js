@@ -141,6 +141,11 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
     if (err) {
       cb(err)
     }
+    console.log(results);
+    results[0]['num_endorsed_self'] = !results[0]['num_endorsed_self'] ? 0 : results[0]['num_endorsed_self'];
+
+    results[0]['num_endorsed_junior'] = !results[0]['num_endorsed_junior'] ? 0 : results[0]['num_endorsed_junior'];
+
     cb(null, results);
   });
 
