@@ -158,12 +158,12 @@ class Welcome extends React.Component {
         <h2>Welcome {this.props.first_name}! </h2>
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
-        <section>
-        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>your cohort</h4>
-        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>your juniors</h4>
-        <h4 onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'senior')}>your seniors</h4>
-        <h4 onClick={()=>this.getEndorsedPersons(this.props.person_id)}>endorsed</h4>
-        </section>
+        <div className="tabs">
+          <div className="tab" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>your cohort</div>
+          <div className="tab" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>juniors</div>
+        </div>
+        <span className="tab endorsed" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'senior')}>endorsed</span>
+
         <ConnectionLinks
         connectionItems={this.state.connectionItems}
         updateConnectionStatus={this.updateConnectionStatus}
