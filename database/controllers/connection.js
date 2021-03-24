@@ -101,7 +101,7 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
   ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
   FROM people as p
   LEFT JOIN etrain.connections as c ON p.id = c.person_id
-  WHERE p.id = ${person_id} AND p.cohort_id = ${cohort_id}
+  WHERE p.id = ${person_id} AND p.cohort_id = ${cohort_id} AND c.status_name = 'endorsed'
   GROUP BY p.id) as num_endorsed_self,
 
 (SELECT COUNT(p.id)
@@ -111,7 +111,7 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
   ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
   FROM people as p
   LEFT JOIN etrain.connections as c ON p.id = c.person_id
-  WHERE p.id = ${person_id} AND p.cohort_id = ${junior_id}
+  WHERE p.id = ${person_id} AND p.cohort_id = ${junior_id} AND c.status_name = 'endorsed'
   GROUP BY p.id) as num_endorsed_junior,
 
 (SELECT COUNT(p.id)
