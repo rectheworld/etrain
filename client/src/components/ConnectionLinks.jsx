@@ -15,16 +15,15 @@ function ConnectionLinks({connectionItems, updateConnectionStatus}) {
         last_name = {person.last_name}
         linkedin = {person.linkedin}
         target_id = {person.id}
-        status={person.status}
+        friended={person.friended}
         updateConnectionStatus = {updateConnectionStatus}/>
         )
       })
 
       return (
-        <section>
-        <h3> Lets keep the Karma Rolling!</h3>
+        <div>
           {connectionLinks}
-        </section>
+        </div>
       )
 
 }

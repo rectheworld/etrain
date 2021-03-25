@@ -57,6 +57,7 @@ h2 {
 h3 {
   font-size: 18px;
   font-weight: 500;
+  margin: 2rem 0;
 }
 
 .warning {
@@ -74,9 +75,9 @@ section {
   margin: 2em 0;
 }
 
-section:nth-child(n+2) {
+/* section:nth-child(n+2) {
   margin-top: 3.5em;
-}
+} */
 
 strong {
   font-weight: 600;
@@ -99,36 +100,45 @@ form {
 }
 
 .tab {
-  /* display: inline-block; */
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
+  display: inline-block;
   background-color:#D3E7EF;
-  width: 130px;
-  padding-top: 8px;
-  margin: 0 10px;
-  padding-bottom: 20px;
+  width: 155px;
+  height: 40px;
   display: flex;
-  align-content: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tabFocus {
+  display: inline-block;
+  background-color:#92C2D7;
+  color: white;
+  width: 155px;
+  height: 40px;
+  display: flex;
+  align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
 .tabs {
-  position: absolute;
   display: flex;
+  width: 100%;
   justify-content: space-between;
-  transform: rotate(90deg);
-  width: min-content;
-  top:560px;
-  right:-165px;
-  z-index: -1;
-  /* flex-direction: column; */
+  margin-bottom: 2rem;
 }
 
 .endorsed {
-  transform: rotate(-90deg);
   position: absolute;
   top: 190px;
-  left: -90px;
-  z-index: -1;
+  left: -40px;
+  background-color:#92C2D7;
+  padding: 20px 10px;
+  cursor: pointer;
+}
+
+#instuctions {
+  font-size: 16px;
+  margin-bottom: 3rem;
 }

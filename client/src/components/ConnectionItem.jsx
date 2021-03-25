@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Styles from "./Styles/ConnectionItem.module.css"
 
 function ConnectionItem(props) {
+  console.log(`${props.first_name}: ${props.friended}`)
   return (
   <div className={Styles['conn-item']}>
 
@@ -24,8 +25,8 @@ function ConnectionItem(props) {
     }
 
     <div className={Styles['status-btn-box']}>
-      <button className={props.status !== 'friended'? Styles['status-btn']: Styles['clicked-status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'friended')}}> Friended</button>
-      <button className={props.status !== 'endorsed'? Styles['status-btn']: Styles['clicked-status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'endorsed')}}> Endorsed</button>
+      <button className={props.friended !== 1? Styles['status-btn']: Styles['clicked-status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'friended')}}> Friended</button>
+      <button className={Styles['status-btn']} onClick={() => {props.updateConnectionStatus(props.target_id, 'endorsed')}}> Endorsed</button>
     </div>
 
   </div>

@@ -13,7 +13,7 @@ class Welcome extends React.Component {
 
     this.state = {
       connectionItems: {},
-      preformaceMetrics: {num_cohort_self: 0},
+      preformaceMetrics: {},
       displayedCohort: 'self'
     }
 
@@ -37,17 +37,17 @@ class Welcome extends React.Component {
   */
   processConnections (data) {
 
-    let connectionItems = {};
-    console.log(data)
-    data.forEach((x) => {
-      if(!x['status']) {
-        x['status'] = 'none'
-      connectionItems[x.id] = x;
-      }
-    });
+    // let connectionItems = {};
+    // console.log(data)
+    // data.forEach((x) => {
+    //   if(!x['status']) {
+    //     x['status'] = 'none'
+    //   connectionItems[x.id] = x;
+    //   }
+    // });
 
     this.setState({
-      connectionItems: connectionItems
+      connectionItems: data
     })
 
   }
@@ -158,16 +158,35 @@ class Welcome extends React.Component {
         <h2>Welcome {this.props.first_name}! </h2>
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
-        <div className="tabs">
-          <div className="tab" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>your cohort</div>
-          <div className="tab" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>juniors</div>
+          <section id="instuctions">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac, justo bibendum mauris quam arcu, quam laoreet.Nisl turpis in turpis lobortis donec urna. Orci proin purus pellentesque felis. Nibh orci diam fermentum morbi pharetra purus.
+          </section>
+        <div className="endorsed" onClick={()=>this.getEndorsedPersons(this.props.person_id)}>
+        <svg width="20" height="20" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7556 15.2475L4.17813 8.66979L0 12.8481L11.1515 24L28 3.78823L23.4555 0L10.7556 15.2475Z" fill="white"/>
+</svg>
+  
         </div>
-        <span className="tab endorsed" onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'senior')}>endorsed</span>
-
+        <section>
+        <h3> Lets keep the Karma Rolling!</h3>
+        <div className="tabs">
+          <div className={this.state.displayedCohort !== 'self'? 'tab': 'tabFocus'}
+          onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>
+            your cohort
+          </div>
+          <div className={this.state.displayedCohort !== 'junior'? 'tab' : 'tabFocus'}
+          onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>
+            juniors
+          </div>
+          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tabFocus'}>
+            seniors
+          </div>
+        </div>
         <ConnectionLinks
         connectionItems={this.state.connectionItems}
         updateConnectionStatus={this.updateConnectionStatus}
         />
+        </section>
       </div>
     );
   }
