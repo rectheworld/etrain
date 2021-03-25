@@ -63,7 +63,7 @@ const updateConnection = (id, target_id, status_type, cb) => {
 
   axios(config)
   .then(function (response) {
-    cb(null, response.data, target_id)
+    cb(null, response.data, target_id, status_type)
   })
   .catch(function (error) {
     cb(error);

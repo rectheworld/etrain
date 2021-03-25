@@ -2,6 +2,7 @@ import React from 'react';
 import PercentageBar from './PercentageBar.jsx';
 
 function Stats({preformaceMetrics}) {
+  console.log(preformaceMetrics)
     let numEndorsedCohort = preformaceMetrics.num_endorsed_self? preformaceMetrics.num_endorsed_self : 0;
     let numEndorsedJuniors = preformaceMetrics.num_endorsed_junior? preformaceMetrics.num_endorsed_junior : 0;
 

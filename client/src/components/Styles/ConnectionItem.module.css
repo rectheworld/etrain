@@ -30,7 +30,6 @@
   background-color: #0078AB;
   color: white;
   padding: 10px 25px;
-  margin: 8px 0;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -45,10 +44,9 @@
 }
 
 .clicked-status-btn {
-  background-color:#9B9B9B;
-  color: white;
+  background-color:#cecece;
+  color: rgb(102, 102, 102);
   padding: 10px 25px;
-  margin: 8px 0;
   border: none;
   cursor: pointer;
   border-radius: 5px;
