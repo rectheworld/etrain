@@ -158,9 +158,21 @@ class Welcome extends React.Component {
         <h2>Welcome {this.props.first_name}! </h2>
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
-          <section id="instuctions">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac, justo bibendum mauris quam arcu, quam laoreet.Nisl turpis in turpis lobortis donec urna. Orci proin purus pellentesque felis. Nibh orci diam fermentum morbi pharetra purus.
-          </section>
+          <section className="instructions">
+            <p>
+              <strong>Endorsing your peers is a two step process.</strong>
+              <ol>
+              <li>"Friend" your peer on LinkedIn</li>
+              <li>Check back on this site after a minute to see if your request was accepted by your peer.</li>
+              </ol>
+            </p>
+          <p><strong>Pro Tip:</strong> Get everyone in your cohort to get on the Endorsement Train the same evening to get everyone friended and endorsed in a matter of hours!</p>
+
+          <p>
+            The more people you endorse, the more people will endorse you! <br/>
+            The more people endorse you, the more recruiters will hit you up!
+          </p>  
+        </section>
         <div className="endorsed" onClick={()=>this.getEndorsedPersons(this.props.person_id)}>
         <svg width="20" height="20" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7556 15.2475L4.17813 8.66979L0 12.8481L11.1515 24L28 3.78823L23.4555 0L10.7556 15.2475Z" fill="white"/>
@@ -170,15 +182,15 @@ class Welcome extends React.Component {
         <section>
         <h3> Lets keep the Karma Rolling!</h3>
         <div className="tabs">
-          <div className={this.state.displayedCohort !== 'self'? 'tab': 'tabFocus'}
+          <div className={this.state.displayedCohort !== 'self'? 'tab': 'tab-focus'}
           onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>
             your cohort
           </div>
-          <div className={this.state.displayedCohort !== 'junior'? 'tab' : 'tabFocus'}
+          <div className={this.state.displayedCohort !== 'junior'? 'tab' : 'tab-focus'}
           onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>
             juniors
           </div>
-          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tabFocus'}>
+          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tab-focus'}>
             seniors
           </div>
         </div>
