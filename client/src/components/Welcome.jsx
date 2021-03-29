@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
-
-import ConnectionItem from './ConnectionItem.jsx'
 import Stats from './Stats.jsx'
 
 
 import api from '../helpers/api.jsx'
+import ConnectionLinks from './ConnectionLinks.jsx';
 
 
 class Welcome extends React.Component {
@@ -14,7 +13,8 @@ class Welcome extends React.Component {
 
     this.state = {
       connectionItems: {},
-      preformaceMetrics: {num_cohort_self: 0}
+      preformaceMetrics: {},
+      displayedCohort: 'self'
     }
 
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
@@ -22,7 +22,6 @@ class Welcome extends React.Component {
     this.getNonConnectionbyCohort = this.getNonConnectionbyCohort.bind(this);
 
   }
-
 
   /**
   processConnections
@@ -38,14 +37,17 @@ class Welcome extends React.Component {
   */
   processConnections (data) {
 
-    let connectionItems = {};
-    data.forEach((x) => {
-      x['status'] = 'none'
-      connectionItems[x.id] = x;
-    });
+    // let connectionItems = {};
+    // console.log(data)
+    // data.forEach((x) => {
+    //   if(!x['status']) {
+    //     x['status'] = 'none'
+    //   connectionItems[x.id] = x;
+    //   }
+    // });
 
     this.setState({
-      connectionItems: connectionItems
+      connectionItems: data
     })
 
   }
@@ -63,23 +65,23 @@ class Welcome extends React.Component {
   updateConnectionStatus (target_id, status) {
     console.log(`In updateConnectionStatus with ${target_id} and ${status}`);
 
-
-
     api.updateConnection( this.props.person_id, target_id, status, this.updateConnectionStatusCallBack);
   } // End updateConnectionStatus
 
-  updateConnectionStatusCallBack (err, data, target_id) {
+  updateConnectionStatusCallBack (err, data, target_id, status) {
     console.log('updateConnectionStatusCallBack');
 
     if (err) {
       console.log(err)
     } else {
-      // Upon Success, update the front end status of the link so it appears grayed out
-      let newConnections = this.state.connectionItems;
-      newConnections[target_id].status = 'clicked';
-      this.setState({
-        connectionItems: newConnections
-      })
+      // // Upon Success, update the front end status of the link so it appears grayed out
+      // let newConnections = this.state.connectionItems;
+      // newConnections[target_id].status = status;
+      // this.setState({
+      //   connectionItems: newConnections
+      // })
+
+      this.getNonConnectionbyCohort(this.props.person_id, this.state.displayedCohort)
     }
   } // End updateConnectionStatusCallBack
 
@@ -94,7 +96,7 @@ class Welcome extends React.Component {
         // Process connection data into a format for the state variable
         this.setState({
           preformaceMetrics: data[0]
-        }, ()=> console.log(this.state.preformaceMetrics))
+        })
       }
     });
 
@@ -128,7 +130,9 @@ class Welcome extends React.Component {
         // Process connection data into a format for the state variable
         this.processConnections(data)
       }
-    })
+    }, 
+    this.setState({ displayedCohort: cohortRelation})
+      )
 
   } // End getNonConnectionbyCohort
 
@@ -147,36 +151,53 @@ class Welcome extends React.Component {
   } // End getNonConnectionbyCohort
 
   render() {
-    console.log(this.state.connectionItems)
     // let connectionLinks = this.state.connectionItems.map((person) =>
-    let connectionLinks = [];
-    Object.entries(this.state.connectionItems).forEach((key) =>
-     {
-       // Grba the person object
-      let person = key[1];
-      // Create a Connection link Reacto Component
-      connectionLinks.push(
-        <ConnectionItem
-        key = {person.linkedin}
-        first_name = {person.first_name}
-        last_name = {person.last_name}
-        linkedin = {person.linkedin}
-        target_id = {person.id}
-        status={person.status}
-        updateConnectionStatus = {this.updateConnectionStatus}/>
-        )
-      })
-
-
     return (
       <div>
         <section>
         <h2>Welcome {this.props.first_name}! </h2>
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
         </section>
+          <section className="instructions">
+            <p>
+              <strong>Endorsing your peers is a two step process.</strong>
+              <ol>
+              <li>"Friend" your peer on LinkedIn</li>
+              <li>Check back on this site after a minute to see if your request was accepted by your peer.</li>
+              </ol>
+            </p>
+          <p><strong>Pro Tip:</strong> Get everyone in your cohort to get on the Endorsement Train the same evening to get everyone friended and endorsed in a matter of hours!</p>
+
+          <p>
+            The more people you endorse, the more people will endorse you! <br/>
+            The more people endorse you, the more recruiters will hit you up!
+          </p>  
+        </section>
+        <div className="endorsed" onClick={()=>this.getEndorsedPersons(this.props.person_id)}>
+        <svg width="20" height="20" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7556 15.2475L4.17813 8.66979L0 12.8481L11.1515 24L28 3.78823L23.4555 0L10.7556 15.2475Z" fill="white"/>
+</svg>
+  
+        </div>
         <section>
         <h3> Lets keep the Karma Rolling!</h3>
-        {connectionLinks}
+        <div className="tabs">
+          <div className={this.state.displayedCohort !== 'self'? 'tab': 'tab-focus'}
+          onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>
+            your cohort
+          </div>
+          <div className={this.state.displayedCohort !== 'junior'? 'tab' : 'tab-focus'}
+          onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>
+            juniors
+          </div>
+          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tab-focus'}>
+            seniors
+          </div>
+        </div>
+        <ConnectionLinks
+        connectionItems={this.state.connectionItems}
+        updateConnectionStatus={this.updateConnectionStatus}
+        />
         </section>
       </div>
     );
