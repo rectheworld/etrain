@@ -63,13 +63,13 @@ const getConnectedId = (id, target_id, cb) => {
 const getUnConnectedList = (id, cohort_id, cb) => {
     let person_query = `
     --  Select all the people who we dont have a connection with
-    SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections, 0 as friended FROM etrain.people AS p
+    SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections, 0 as friended FROM people AS p
     --     Get the connection data (is used for ordering)
-        LEFT JOIN etrain.connections as c ON p.id = c.person_id
+        LEFT JOIN connections as c ON p.id = c.person_id
     -- Limit the results to the target person who are either not conencted at all or friended
     WHERE (
-      p.id NOT IN (SELECT target_id FROM etrain.people as p
-        INNER JOIN etrain.connections as c ON p.id = c.person_id
+      p.id NOT IN (SELECT target_id FROM people as p
+        INNER JOIN connections as c ON p.id = c.person_id
         WHERE p.id = ${id})
           )
       AND p.cohort_id = ${cohort_id}
@@ -82,13 +82,13 @@ const getUnConnectedList = (id, cohort_id, cb) => {
         UNION ALL
 
 
-        SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections, 1 as friended FROM etrain.people AS p
+        SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id, COUNT(c.person_id) as num_connections, 1 as friended FROM people AS p
     --     Get the connection data (is used for ordering)
-        LEFT JOIN etrain.connections as c ON p.id = c.person_id
+        LEFT JOIN connections as c ON p.id = c.person_id
     -- Limit the results to the target person who are either not conencted at all or friended
     WHERE (
-          p.id IN (SELECT target_id FROM etrain.people as p
-        INNER JOIN etrain.connections as c ON p.id = c.person_id
+          p.id IN (SELECT target_id FROM people as p
+        INNER JOIN connections as c ON p.id = c.person_id
         WHERE p.id = ${id} and c.status_name = 'friended'
             )
           )
@@ -117,7 +117,7 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
   let query = `SELECT
   ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
   FROM people as p
-  LEFT JOIN etrain.connections as c ON p.id = c.person_id
+  LEFT JOIN connections as c ON p.id = c.person_id
   WHERE p.id = ${person_id} AND p.cohort_id = ${cohort_id} AND c.status_name = 'endorsed'
   GROUP BY p.id) as num_endorsed_self,
 
@@ -125,23 +125,22 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
   FROM people as p
   WHERE p.cohort_id = ${cohort_id}) as num_cohort_self,
 
-  ( SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
+  (SELECT COUNT(CASE WHEN c.status_name = 'endorsed' THEN 1 ELSE 0 END)
   FROM people as p
-  LEFT JOIN etrain.connections as c ON p.id = c.person_id
-  WHERE p.id = ${person_id} AND p.cohort_id = ${junior_id} AND c.status_name = 'endorsed'
-  GROUP BY p.id) as num_endorsed_junior,
+  LEFT JOIN connections as c ON p.id = c.target_id
+  WHERE c.person_id = ${person_id} AND p.cohort_id = ${junior_id} AND c.status_name = 'endorsed'
+  GROUP BY c.person_id) as num_endorsed_junior,
 
 (SELECT COUNT(p.id)
   FROM people as p
   WHERE p.cohort_id = ${junior_id}) as num_cohort_junior;`
 
 
-
   db.query(query,(err, results) => {
     if (err) {
       cb(err)
     }
-    console.log(results);
+
     results[0]['num_endorsed_self'] = !results[0]['num_endorsed_self'] ? 0 : results[0]['num_endorsed_self'];
 
     results[0]['num_endorsed_junior'] = !results[0]['num_endorsed_junior'] ? 0 : results[0]['num_endorsed_junior'];
@@ -153,11 +152,11 @@ const getConnectionMetrics = (person_id, cohort_id, junior_id, cb) => {
 
 const getEndorsedConnections = (id, cb) => {
 
-  let query = `SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id FROM etrain.people AS p
+  let query = `SELECT p.id, p.first_name, p.last_name, p.linkedin, p.cohort_id FROM people AS p
   -- Limit the results to the target person who are either not conencted at all or friended
   WHERE (
-        p.id IN (SELECT target_id FROM etrain.people as p
-      INNER JOIN etrain.connections as c ON p.id = c.person_id
+        p.id IN (SELECT target_id FROM people as p
+      INNER JOIN connections as c ON p.id = c.person_id
       WHERE p.id = ${id} AND c.status_name = 'endorsed'
           )
       )

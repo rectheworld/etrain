@@ -10,7 +10,7 @@ class CheckPresence extends React.Component {
     super(props);
 
     this.state = {
-      linkedInLink: 'https://www.linkedin.com/in/lexyk/',
+      linkedInLink: '',
       bad_formatting: false
     };
 
