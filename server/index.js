@@ -6,7 +6,7 @@ const Cohort = require('../database/controllers/cohort.js');
 const Connection = require('../database/controllers/connection.js');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
