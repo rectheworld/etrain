@@ -4,6 +4,8 @@ import AddUser from './AddUser.jsx';
 import CheckPresence from './CheckPresence.jsx';
 import Welcome from './Welcome.jsx';
 
+import api from "../helpers/api.jsx";
+
 import Styles from "./Styles/App.module.css"
 
 class App extends React.Component {
@@ -27,6 +29,20 @@ class App extends React.Component {
     this.setPersonData = this.setPersonData.bind(this);
   }
 
+  componentDidMount () {
+    let linkedInName = localStorage.getItem("linkedInName");
+    if (linkedInName) {
+
+
+      api.getUserByLinkedIn(linkedInName, (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setPersonData(data);
+        }
+      });
+    }
+  }
 
   handleChange(event) {
 
@@ -54,6 +70,8 @@ class App extends React.Component {
         currentPage: 'AddUser',
       })
     } else {
+
+      localStorage.setItem("linkedInName", data.linkedin);
 
       this.setState({
         first_name: data.first_name,
