@@ -9,8 +9,9 @@ class CheckPresence extends React.Component {
     super(props);
 
     this.state = {
-      linkedInLink: "https://www.linkedin.com/in/lexyk/",
-      bad_formatting: false,
+      linkedInLink: '',
+      bad_formatting: false
+
     };
 
     this.handleChange = this.handleChange.bind(this);
