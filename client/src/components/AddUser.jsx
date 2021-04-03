@@ -99,7 +99,7 @@ class AddUser extends React.Component {
     return (
       <div>
         <div className="bottom-buffer">
-          <h2>Hmmmm looks like you're not a passanger on the train yet?</h2>
+          <h2>Hmmmm looks like you're not a passanger on the train yet...</h2>
           <strong>Lets get you a ticket!</strong>
         </div>
         <form onSubmit={this.handleSubmit}>
@@ -124,10 +124,12 @@ class AddUser extends React.Component {
           <div>
             <div>
               Hmmm I dont reconize that cohort name. Did you enter it correctly?
-              <br/>
-              If you are part of a cohort that is not yet in the system would you please give some additional details to help you and your peers out!
-              <br/>
             </div>
+            <br></br>
+            <div>
+              If you are part of a cohort that is not yet in the system would you please give some additional details to help you and your peers out!
+            </div>
+            <br></br>
             <label>
             Junior Cohort Name:
             <input type="text" name="juniorCohort" value={this.state.juniorCohort} onChange={this.handleChange} />
@@ -137,9 +139,13 @@ class AddUser extends React.Component {
           <input type="text" name="startDateCohort" value={this.state.startDateCohort} onChange={this.handleChange} placeholder = 'yyyy-mm-dd'/>
         </label>
         <div>
-            Please dont use this feature to troll or provide bad infomation about your cohort's details. <br/>
-            The vision of this site is the make it as easy as possible for HackReactor students to grow their network and having accurate infomation is the first step.
+           Please dont use this feature to troll or provide bad infomation about your cohort's details.
         </div>
+        <br></br>
+        <div>
+           The vision of this site is the make it as easy as possible for HackReactor students to grow their network and having accurate infomation is the first step.
+        </div>
+        <br></br>
         <label>
           I certify that I am Not An Asshole
           <input

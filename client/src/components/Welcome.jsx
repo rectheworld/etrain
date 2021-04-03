@@ -20,6 +20,7 @@ class Welcome extends React.Component {
     this.updateConnectionStatus = this.updateConnectionStatus.bind(this);
     this.updateConnectionStatusCallBack = this.updateConnectionStatusCallBack.bind(this);
     this.getNonConnectionbyCohort = this.getNonConnectionbyCohort.bind(this);
+    this.updateData = this.updateData.bind(this);
 
   }
 
@@ -36,15 +37,6 @@ class Welcome extends React.Component {
   Example
   */
   processConnections (data) {
-
-    // let connectionItems = {};
-    // console.log(data)
-    // data.forEach((x) => {
-    //   if(!x['status']) {
-    //     x['status'] = 'none'
-    //   connectionItems[x.id] = x;
-    //   }
-    // });
 
     this.setState({
       connectionItems: data
@@ -82,6 +74,19 @@ class Welcome extends React.Component {
       // })
 
       this.getNonConnectionbyCohort(this.props.person_id, this.state.displayedCohort)
+
+      api.getPreformaceMetrics(this.props.person_id, this.props.cohort_id, this.props.junior_id, (err, data) => {
+        if (err) {
+          console.log(err)
+        } else {
+          // Process connection data into a format for the state variable
+          this.setState({
+            preformaceMetrics: data[0]
+          })
+        }
+      });
+
+
     }
   } // End updateConnectionStatusCallBack
 
@@ -89,6 +94,12 @@ class Welcome extends React.Component {
   /// on Mount, return the people in the users cohort who are not endorsed
   componentDidMount () {
 
+    this.updateData()
+
+
+  } // End componentDidMount
+
+  updateData () {
     api.getPreformaceMetrics(this.props.person_id, this.props.cohort_id, this.props.junior_id, (err, data) => {
       if (err) {
         console.log(err)
@@ -108,8 +119,7 @@ class Welcome extends React.Component {
         this.processConnections(data);
       }
     })
-
-  } // End componentDidMount
+  }
 
   getNonConnectionbyCohort (personid, cohortRelation) {
 
@@ -130,13 +140,15 @@ class Welcome extends React.Component {
         // Process connection data into a format for the state variable
         this.processConnections(data)
       }
-    }, 
+    },
     this.setState({ displayedCohort: cohortRelation})
       )
 
   } // End getNonConnectionbyCohort
 
   getEndorsedPersons (personid) {
+
+    this.setState({ displayedCohort: 'endorsed'})
 
 
     api.getEndorsedPersons(personid,(err, data) => {
@@ -157,6 +169,7 @@ class Welcome extends React.Component {
         <section>
         <h2>Welcome {this.props.first_name}! </h2>
           <Stats preformaceMetrics={this.state.preformaceMetrics}/>
+          {/* <a onClick={this.updateData}> Refresh Data </a> */}
         </section>
           <section className="instructions">
             <p>
@@ -171,16 +184,17 @@ class Welcome extends React.Component {
           <p>
             The more people you endorse, the more people will endorse you! <br/>
             The more people endorse you, the more recruiters will hit you up!
-          </p>  
+          </p>
         </section>
         <div className="endorsed" onClick={()=>this.getEndorsedPersons(this.props.person_id)}>
         <svg width="20" height="20" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7556 15.2475L4.17813 8.66979L0 12.8481L11.1515 24L28 3.78823L23.4555 0L10.7556 15.2475Z" fill="white"/>
 </svg>
-  
+
         </div>
         <section>
-        <h3> Lets keep the Karma Rolling!</h3>
+
+
         <div className="tabs">
           <div className={this.state.displayedCohort !== 'self'? 'tab': 'tab-focus'}
           onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'self')}>
@@ -190,14 +204,28 @@ class Welcome extends React.Component {
           onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'junior')}>
             juniors
           </div>
-          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tab-focus'}>
+          <div className={this.state.displayedCohort !== 'senior'? 'tab' : 'tab-focus'}
+          onClick={()=>this.getNonConnectionbyCohort(this.props.person_id, 'senior')}>
             seniors
           </div>
         </div>
+
+
+      { this.state.displayedCohort === 'endorsed' &&
+          <h3> These are your peers you already endorsed:</h3>
+        }
+
+
+        { Object.keys(this.state.connectionItems).length > 0 &&
         <ConnectionLinks
         connectionItems={this.state.connectionItems}
         updateConnectionStatus={this.updateConnectionStatus}
         />
+        }
+        {/* If there are no people in the group display a message */}
+        { Object.keys(this.state.connectionItems).length === 0 &&
+        <h4>No people here :-(</h4>
+        }
         </section>
       </div>
     );
